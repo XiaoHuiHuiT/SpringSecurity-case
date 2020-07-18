@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,14 +36,14 @@ public class User implements UserDetails {
     @Setter(AccessLevel.NONE)
     private Boolean locked;
 
-    private List<Role> roleList;
+    private List<Role> roles;
 
     // 该用户拥有的角色
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roleList) {
-            authorities.add(new SimpleGrantedAuthority("ROLB_" + role.getName()));
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         }
         return authorities;
     }

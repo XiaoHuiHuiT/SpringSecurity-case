@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         // 到了这里就代表登录成功，然后根据用户的Id查询用户的角色
-        user.setRoleList(userMapper.getRolesByUserId(user.getId()));
+        user.setRoles(userMapper.getRolesByUserId(user.getId()));
         log.debug("登录成功 {}",user);
         return user;
     }
