@@ -1,24 +1,31 @@
 package com.jonathanlee.springsecurity_pro.controller;
 
+import com.jonathanlee.springsecurity_pro.service.MethodService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello Security!";
+    private final MethodService methodService;
+
+    public HelloController(MethodService methodService) {
+        this.methodService = methodService;
     }
 
-    @GetMapping("/admin/hello")
+    @GetMapping("/hello1")
+    public String hello1() {
+        return methodService.admin();
+    }
+
+    @GetMapping("/hello2")
     public String admin() {
-        return "Hello admin!";
+        return methodService.user();
     }
 
-    @GetMapping("/user/hello")
+    @GetMapping("/hello3")
     public String user() {
-        return "Hello user!";
+        return methodService.hello();
     }
-
 }

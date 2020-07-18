@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @创建时间 2020-05-1920:16
  */
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class MultiSecurityConfig {
 
     /**
@@ -27,7 +29,7 @@ public class MultiSecurityConfig {
      * 就输入1234就能登陆上来
      * 这是一个过期的方案,后面我在详细的介绍密码加密的问题
      *
-     * @return
+     * @return PasswordEncoder
      */
     /*@Bean
     PasswordEncoder passwordEncoder() {
@@ -67,7 +69,7 @@ public class MultiSecurityConfig {
             http.authorizeRequests().anyRequest().authenticated()
                     .and()
                     .formLogin()
-                    .loginProcessingUrl("doLogin")
+                    // .loginProcessingUrl("doLogin")
                     // 登陆相关的接口可以直接访问,直接过
                     .permitAll()
                     .and()
