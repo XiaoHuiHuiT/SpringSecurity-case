@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -25,11 +26,16 @@ public class MultiSecurityConfig {
      * 一会用户在前端输入的时候
      * 就输入1234就能登陆上来
      * 这是一个过期的方案,后面我在详细的介绍密码加密的问题
+     *
      * @return
      */
-    @Bean
+    /*@Bean
     PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }*/
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired
@@ -37,10 +43,10 @@ public class MultiSecurityConfig {
         // 基于内存的认证
         auth.inMemoryAuthentication()
                 // 配置第一个
-                .withUser("jonathanlee").password("1234").roles("admin")
+                .withUser("jonathanlee").password("$2a$10$iN8pf9mirJSZf.Cm2k08EuhPTDPL1pwoFeYQvFMPD500Z5jtfq6HC").roles("admin")
                 .and()
                 // 配置第二个
-                .withUser("xhh").password("1234").roles("user");// 到了这里,就相当于内存里面配置了两个用户
+                .withUser("xhh").password("$2a$10$zKR3VcZWgHnrMzC.HYC26e3t0mkxbT4ZVs1kJYS6YYRomwEjRWTV.").roles("user");// 到了这里,就相当于内存里面配置了两个用户
     }
 
     @Configuration
@@ -55,7 +61,7 @@ public class MultiSecurityConfig {
     }
 
     @Configuration
-    public static class OtherSecurityConfig extends WebSecurityConfigurerAdapter{
+    public static class OtherSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests().anyRequest().authenticated()
