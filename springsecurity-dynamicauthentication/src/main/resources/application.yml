@@ -1,0 +1,21 @@
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springsecuritydb?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: 1234
+    type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  level:
+    # 那个包下  日志级别
+    com.jonathanlee.springsecuritydynamicauthentication: debug
+
+mybatis:
+  # 别名
+  type-aliases-package: com.jonathanlee.springsecuritydynamicauthentication.bean
+  # mapper.xml的地址
+  mapper-locations: mapper/*.xml
