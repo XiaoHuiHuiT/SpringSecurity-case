@@ -1,0 +1,4 @@
+logging:
+  level:
+    # 那个包下  日志级别
+    com.jonathanlee.springbootshirojavaconfiguration: debug
